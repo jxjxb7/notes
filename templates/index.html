@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <title>ЗАДАЧНИК</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Courier, sans-serif;
+        }
+
+        .header {
+            background-color: #D2BDFE;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .note-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .note {
+            width: calc(20% - 20px);
+            height: 300px;
+            border: 1px solid #ccc;
+            margin: 0 10px 30px 10px;
+            overflow: auto;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .note p {
+            white-space: normal;
+            overflow-wrap: break-word;
+            overflow-y: auto;
+        }
+
+        .yellow {
+            background-color: #FFFDBF;
+        }
+
+        .lightblue {
+            background-color: #BDF7FE;
+        }
+
+        .pink {
+            background-color: #FFBFE1;
+        }
+
+        .green {
+            background-color: #C8FFBF;
+        }
+
+        textarea {
+            width: 200px;
+            height: 100px;
+            margin-bottom: 2vh;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+    </style>
+
+
+</head>
+<body>
+    <div class="header">
+        <h1>ПРИЛОЖЕНИЕ ДЛЯ СОЗДАНИЯ ЗАДАЧ</h1>
+        <h3>СОЗДАТЬ НОВУЮ ЗАДАЧУ:</h3>
+        <form action="/add_note" method="post">
+            <!-- Input fields for adding a new note-->
+            <textarea name = "note_text" placeholder="СОЗДАТЬ ЗАДАЧУ..." style="color: grey"></textarea>
+            <div>
+            <select name ="note_color">
+                <!--Options for note color selection -->
+                <option value="yellow">ЖЁЛТЫЙ</option>
+                <option value="lightblue">ГОЛУБОЙ</option>
+                <option value="pink">РОЗОВЫЙ</option>
+                <option value="green">ЗЕЛЁНЫЙ</option>
+            </select>
+            <button type="submit">СОЗДАТЬ</button></div>
+
+        </form>
+
+    </div>
+    <div class="note-container">
+        {% for note in notes %}
+        <!-- Display existing notes -->
+
+        <div class="note {{ note.color }}">
+            <p>{{ note.text }}</p>
+            <form action="/delete_note/{{ loop.index0 }}" method="post">
+                <button type="submit">УДАЛИТЬ</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
